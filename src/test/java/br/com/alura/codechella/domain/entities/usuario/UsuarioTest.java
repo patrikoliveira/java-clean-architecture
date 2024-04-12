@@ -41,4 +41,26 @@ public class UsuarioTest {
                 IllegalArgumentException.class,
                 () -> new Usuario("123.456.789-00", "Patrik", LocalDate.parse("1983-10-03"), "patrik@com"));
     }
+
+    @Test
+    public void naoDeveCadastrarUsuarioMenorDeDezoitoAnos() {
+        LocalDate dataNascimento = LocalDate.now().minusYears(17);
+        IllegalArgumentException exception = Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> new Usuario("123.456.789-00", "Patrik", dataNascimento, "patrik@com.com"));
+
+        Assertions.assertEquals("Idade não permitida", exception.getMessage());
+    }
+
+    @Test
+    public void deveCriarUsuarioUsandoFabricaDeUsuario() {
+        FabricaDeUsuario fabrica = new FabricaDeUsuario();
+        Usuario usuario = fabrica.comNomeCpfNascimento("Patrik", "123.456.789-00",LocalDate.parse("1983-10-03"));
+
+        Assertions.assertEquals("Patrik", usuario.getNome());
+        Assertions.assertEquals("123.456.789-00", usuario.getCpf());
+
+        usuario = fabrica.incluiEndereco("12345-000", 40, "apto 201");
+        Assertions.assertEquals("apto 201", usuario.getEndereco().getComplemento());
+    }
 }
