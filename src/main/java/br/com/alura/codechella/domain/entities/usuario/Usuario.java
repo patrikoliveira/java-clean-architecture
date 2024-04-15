@@ -3,10 +3,7 @@ package br.com.alura.codechella.domain.entities.usuario;
 import br.com.alura.codechella.domain.Endereco;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.temporal.ChronoUnit;
-import java.util.regex.Pattern;
 
 public class Usuario {
     private static final String CPF_PATTERN = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}";
